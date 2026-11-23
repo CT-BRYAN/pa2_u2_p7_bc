@@ -18,13 +18,32 @@ public class Main implements QuarkusApplication {
     @Override
     public int run(String... args) throws Exception {
 
+        // CREATE (iNSERT)
+
         System.out.println("\nHola mundo");
         Pedido pedido = new Pedido();
-        pedido.setProducto("Producto 1");
+        pedido.setProducto("Producto prueba 2");
         pedido.setPrecio(10.0);
         pedido.setFecha(LocalDateTime.now());
 
         this.pedidoService.guardar(pedido);
+
+        // READ (buscar)
+        Pedido pedido1 = this.pedidoService.buscarPorID(2);
+        System.out.println("Pedido encontrado: " + pedido1);
+
+        // UPDATE (actualizar)
+
+        pedido.setPrecio(200.0);
+        this.pedidoService.actualizar(pedido);
+
+        Pedido pedido2 = this.pedidoService.buscarPorID(2);
+
+        System.out.println("Pedido actualizado: " + pedido2);
+
+        // DELETE (elimiinar)
+
+        this.pedidoService.eliminar(2);
 
         return 0;
     }
