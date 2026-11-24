@@ -1,11 +1,29 @@
 package ece.edu.uce.com.pedidos.domain.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "envios")
 public class Envio {
 
+    @Id
+    @SequenceGenerator(name = "envio_seq", sequenceName = "envio_seq_db", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "envio_seq")
+    @Column(name = "envi_id")
     private Integer id;
+    @Column(name = "envi_direccion_destino")
     private String direccionDestino;
+    @Column(name = "envi_estado_envio")
     private String estadoEnvio;
+    @Column(name = "envi_costo_envio")
     private Double costoEnvio;
+    @Column(name = "envi_fecha_entrega")
     private String fechaEstimadaEntrega;
 
     public Integer getId() {
