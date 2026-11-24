@@ -25,6 +25,16 @@ public class Pedido {
     private Double precio;
     @Column(name = "pedd_fecha") // nombre de la columna en la base de datos
     private LocalDateTime fecha;
+    @Column(name = "pedd_numero")
+    private String numero;
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
 
     public Integer getId() {
         return id;

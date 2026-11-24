@@ -1,6 +1,7 @@
 package ec.edu.uce.pa.grupo.u2;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import ec.edu.uce.pa.grupo.u2.pedidos.application.PedidoService;
 import ec.edu.uce.pa.grupo.u2.pedidos.domain.model.Pedido;
@@ -18,32 +19,29 @@ public class Main implements QuarkusApplication {
     @Override
     public int run(String... args) throws Exception {
 
-        // CREATE (iNSERT)
+        /*Pedido pedidoN = new Pedido();
+        pedidoN.setProducto("laptop");
+        pedidoN.setPrecio(100.0);
+        pedidoN.setFecha(LocalDateTime.now());
+        pedidoN.setNumero("PED-0001");
+        this.pedidoService.guardar(pedidoN);*/
 
-        System.out.println("\nHola mundo");
-        Pedido pedido = new Pedido();
-        pedido.setProducto("Producto prueba 2");
-        pedido.setPrecio(10.0);
-        pedido.setFecha(LocalDateTime.now());
+        Optional<Pedido> pedido = this.pedidoService.buscarPorID(100);
 
-        this.pedidoService.guardar(pedido);
+        if (pedido.isPresent()) {
+            System.out.println("Pedido encontrado: " + pedido.get());
+        } else {
+            System.out.println("Pedido no encontrado");
+        }
 
-        // READ (buscar)
-        Pedido pedido1 = this.pedidoService.buscarPorID(2);
-        System.out.println("Pedido encontrado: " + pedido1);
+        // read by number
 
-        // UPDATE (actualizar)
-
-        pedido.setPrecio(200.0);
-        this.pedidoService.actualizar(pedido);
-
-        Pedido pedido2 = this.pedidoService.buscarPorID(2);
-
-        System.out.println("Pedido actualizado: " + pedido2);
-
-        // DELETE (elimiinar)
-
-        this.pedidoService.eliminar(2);
+        Optional<Pedido> pedidoByNumber = this.pedidoService.buscarPorNumero("PED-0001");
+        if (pedidoByNumber.isPresent()) {
+            System.out.println("Pedido encontrado POR NUNMERO:" + pedidoByNumber.get());
+        } else {
+            System.out.println("Pedido no encontrado por numero");
+        }
 
         return 0;
     }
