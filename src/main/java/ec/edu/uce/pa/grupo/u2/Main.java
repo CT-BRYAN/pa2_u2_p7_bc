@@ -1,6 +1,6 @@
 package ec.edu.uce.pa.grupo.u2;
 
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import ec.edu.uce.pa.grupo.u2.pedidos.application.PedidoService;
@@ -19,12 +19,14 @@ public class Main implements QuarkusApplication {
     @Override
     public int run(String... args) throws Exception {
 
-        /*Pedido pedidoN = new Pedido();
-        pedidoN.setProducto("laptop");
-        pedidoN.setPrecio(100.0);
-        pedidoN.setFecha(LocalDateTime.now());
-        pedidoN.setNumero("PED-0001");
-        this.pedidoService.guardar(pedidoN);*/
+        /*
+         * Pedido pedidoN = new Pedido();
+         * pedidoN.setProducto("laptop");
+         * pedidoN.setPrecio(100.0);
+         * pedidoN.setFecha(LocalDateTime.now());
+         * pedidoN.setNumero("PED-0001");
+         * this.pedidoService.guardar(pedidoN);
+         */
 
         Optional<Pedido> pedido = this.pedidoService.buscarPorID(100);
 
@@ -43,7 +45,33 @@ public class Main implements QuarkusApplication {
             System.out.println("Pedido no encontrado por numero");
         }
 
+        // read alll
+
+        List<Pedido> pedidoCompleto = this.pedidoService.readAll();
+
+        for (Pedido pedido2 : pedidoCompleto) {
+            System.out.println(pedido2);
+        }
+
+        // read by number native
+        Optional<Pedido> pedidoByNumberNative = this.pedidoService.buscarPorNumeroNative("PED-022");
+        if (pedidoByNumberNative.isPresent()) {
+            System.out.println("Pedido encontrado por SQL NATIVO: "
+                    + pedidoByNumberNative.get());
+        } else {
+            System.out.println("Pedido no encontrado por SQL NATIVO");
+        }
+
+        // read all Native
+
+        List<Pedido> pedidoCompletoNative = this.pedidoService.readAllNative();
+
+        for (Pedido pedido3 : pedidoCompletoNative) {
+            System.out.println(pedido3);
+        }
+
         return 0;
+
     }
 
     public static void main(String[] args) {
